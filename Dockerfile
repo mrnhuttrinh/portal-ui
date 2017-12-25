@@ -9,5 +9,5 @@ COPY build/service-worker.js /usr/share/nginx/html/service-worker.js
 COPY build/favicon.ico /usr/share/nginx/html/favicon.ico
 COPY build/assets/ /usr/share/nginx/html/assets/
 
-EXPOSE 8080
+EXPOSE 8089
 CMD ["nginx", "-g", "daemon off;"]
