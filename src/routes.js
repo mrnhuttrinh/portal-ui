@@ -16,6 +16,7 @@ import {
   Login,
   NotFound,
   Dashboard,
+  UserProfile,
 } from './components';
 
 // https://reacttraining.com/react-router/web/example/auth-workflow
@@ -33,6 +34,7 @@ const AppRoutes = ({refreshTokenRequesting}) => {
             <Switch>
               <PublicRoute path="/login" component={Login} />
               <PrivateRoute exact path="/" component={Dashboard} />
+              <PrivateRoute path="/user-profile" isExact component={UserProfile} />
               <Route component={NotFound}/>
             </Switch>
           )
