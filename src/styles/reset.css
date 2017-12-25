@@ -1,0 +1,26 @@
+* {
+  font-family: 'Roboto-Regular', 'Roboto', sans-serif;
+}
+
+html,body { display: block; margin: 0px; padding: 0px; overflow-x: hidden; }
+
+body {
+  min-height: 100vh;
+}
+
+.ecash-container {
+  height: 100%;
+  min-height: 100vh;
+}
+
+.ecash-container > div {
+  min-height: 100vh;
+}
+
+.ecash-app-loading {
+  height: 100%;
+  width: 100%;
+  display: block;
+  text-align: center;
+  padding-top: 15%;
+}
