@@ -39,12 +39,12 @@ node {
               sh("docker rmi ${imageTag} || true")
           }
 
-          withCredentials([file(credentialsId: 'cms_server', variable: 'ECASH_PEM_FILE')]) {
+          withCredentials([file(credentialsId: 'dev_server', variable: 'ECASH_PEM_FILE')]) {
             stage("Deploy ${appName} docker image") {
-              sh("ssh -tt -p 27 -i $ECASH_PEM_FILE ${env.CMS_UI_USER}@${env.CMS_UI_SERVER} docker login -e ${env.DOCKER_REGISTRY_EMAIL} -u $DOCKER_REPO_USERNAME -p $DOCKER_REPO_PASSWORD ${env.DOCKER_REGISTRY_URL}")
-              sh("ssh -tt -p 27 -i $ECASH_PEM_FILE ${env.CMS_UI_USER}@${env.CMS_UI_SERVER} docker pull ${imageTag}")
-              sh("ssh -tt -p 27 -i $ECASH_PEM_FILE ${env.CMS_UI_USER}@${env.CMS_UI_SERVER} docker rm -f ${containerName} || true")
-              sh("ssh -tt -p 27 -i $ECASH_PEM_FILE ${env.CMS_UI_USER}@${env.CMS_UI_SERVER} docker run --name=${containerName} --net=host --restart=on-failure:7 -d -t -p 8089:8089 ${imageTag}")
+              sh("ssh -tt -p 26 -i $ECASH_PEM_FILE ${env.CMS_UI_USER}@${env.CMS_UI_SERVER} docker login -e ${env.DOCKER_REGISTRY_EMAIL} -u $DOCKER_REPO_USERNAME -p $DOCKER_REPO_PASSWORD ${env.DOCKER_REGISTRY_URL}")
+              sh("ssh -tt -p 26 -i $ECASH_PEM_FILE ${env.CMS_UI_USER}@${env.CMS_UI_SERVER} docker pull ${imageTag}")
+              sh("ssh -tt -p 26 -i $ECASH_PEM_FILE ${env.CMS_UI_USER}@${env.CMS_UI_SERVER} docker rm -f ${containerName} || true")
+              sh("ssh -tt -p 26 -i $ECASH_PEM_FILE ${env.CMS_UI_USER}@${env.CMS_UI_SERVER} docker run --name=${containerName} --net=host --restart=on-failure:7 -d -t -p 8080:8080 ${imageTag}")
             }
           }
       }
