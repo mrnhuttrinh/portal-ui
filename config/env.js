@@ -3,6 +3,8 @@
 const fs = require('fs');
 const path = require('path');
 const paths = require('./paths');
+const globalDev = require('./config.dev.json');
+const globalProd = require('./config.prod.json');
 
 // Make sure that including paths.js after env.js will read .env variables.
 delete require.cache[require.resolve('./paths')];
@@ -57,6 +59,8 @@ process.env.NODE_PATH = (process.env.NODE_PATH || '')
 // injected into the application via DefinePlugin in Webpack configuration.
 const REACT_APP = /^REACT_APP_/i;
 
+
+
 function getClientEnvironment(publicUrl) {
   const raw = Object.keys(process.env)
     .filter(key => REACT_APP.test(key))
@@ -77,13 +81,23 @@ function getClientEnvironment(publicUrl) {
       }
     );
   // Stringify all values so we can feed into Webpack DefinePlugin
-  const stringified = {
-    'process.env': Object.keys(raw).reduce((env, key) => {
-      env[key] = JSON.stringify(raw[key]);
-      return env;
-    }, {}),
-  };
-
+  let globalConfig = {};
+  if (process.env.NODE_ENV === "production") {
+    globalConfig = globalDev;
+  } else {
+    globalConfig = globalProd;
+  }
+  const stringified = Object.assign({}, {
+      'process.env': Object.keys(raw).reduce((env, key) => {
+        env[key] = JSON.stringify(raw[key]);
+        return env;
+      }, {}),
+    },
+      Object.keys(globalConfig).reduce((env, key) => {
+        env[key] = JSON.stringify(globalConfig[key]);
+        return env;
+      }, {})
+    );
   return { raw, stringified };
 }
 

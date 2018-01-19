@@ -206,6 +206,19 @@ const en = {
     'create and connect new wallet': 'create and connect new wallet',
 
     'DEFAULT': 'DEFAULT',
+
+    'CLOSE': 'CLOSE',
+    'WARNING': 'WARNING',
+    'NOTE': 'NOTE',
+    'Experimental better on laptop': 'Experimental better on laptop',
+    'Google Chrome get best experimental for the app.': 'Google Chrome get best experimental for the app.',
+    // general report
+    'General reports': 'General reports',
+    'General': 'General',
+    'View': 'View',
+    // report
+    'Start date can\'t greater than end date!': 'Start date can\'t greater than end date!',
+    'End date can\'t less than start date!': 'End date can\'t less than start date!',
   }
 };
 

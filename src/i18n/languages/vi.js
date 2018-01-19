@@ -205,6 +205,19 @@ const vi = {
     'Disconnect wallet': 'Hủy liên kết',
     'create and connect new wallet': 'Tạo và liên kết với ví mới',
     'DEFAULT': 'MẶC ĐỊNH',
+
+    'CLOSE': 'ĐÓNG',
+    'WARNING': 'CẢNH BÁO',
+    'NOTE': 'LƯU Ý',
+    'Experimental better on laptop': 'Trải nghiệm tốt hơn trên laptop',
+    'Google Chrome get best experimental for the app.': 'Trải nghiệm tốt nhất vơi Google Chrome.',
+    // general report
+    'General reports': 'Báo cáo tổng hợp',
+    'General': 'Tổng hợp',
+    'View': 'Xem',
+    // report
+    'Start date can\'t greater than end date!': 'Ngày bắt đầu không lớn hơn ngày kết thúc!',
+    'End date can\'t less than start date!': 'Ngày kết thúc không nhỏ hơn ngày bắt đầu!',
   }
 };
 

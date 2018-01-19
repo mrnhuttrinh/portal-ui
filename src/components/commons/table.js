@@ -47,7 +47,7 @@ class DataTable extends React.Component {
     this.handleSearchChange = this.handleSearchChange.bind(this);
   }
   componentWillMount() {
-    if (!this.props.search) {
+    if (!this.props.search && this.props.getData) {
       this.props.getData({size: this.props.size, page: this.props.page }, this.props.sort, this.props.search);
     }
   }

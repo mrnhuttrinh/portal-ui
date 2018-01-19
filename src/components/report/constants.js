@@ -1,0 +1,1 @@
+export const FILTERING_REPORT = 'report/FILTERING_REPORT';

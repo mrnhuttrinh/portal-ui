@@ -6,7 +6,6 @@ import {
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import CircularProgress from 'material-ui/CircularProgress';
 import {
   PrivateRoute,
   PublicRoute,
@@ -15,8 +14,10 @@ import {
 import {
   Login,
   NotFound,
-  Dashboard,
   UserProfile,
+  GlobalGuide,
+  AnimationGroup,
+  Report,
 } from './components';
 
 // https://reacttraining.com/react-router/web/example/auth-workflow
@@ -25,15 +26,21 @@ const AppRoutes = ({refreshTokenRequesting}) => {
   return (
     <Router>
       <MuiThemeProvider>
+        <GlobalGuide />
         {
           refreshTokenRequesting ? (
             <div className="ecash-app-loading">
-              <CircularProgress size={80} thickness={5} />
+              <AnimationGroup
+                loading={true}
+                style={{
+                  backgroundColor: 'transparent'
+                }}
+              />
             </div>
           ) : (
             <Switch>
               <PublicRoute path="/login" component={Login} />
-              <PrivateRoute exact path="/" component={Dashboard} />
+              <PrivateRoute exact path="/" component={Report} />
               <PrivateRoute path="/user-profile" isExact component={UserProfile} />
               <Route component={NotFound}/>
             </Switch>

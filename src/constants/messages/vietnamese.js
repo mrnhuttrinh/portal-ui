@@ -18,4 +18,9 @@ export default {
   'Update password': 'Cập nhật mật khẩu',
   'Update password successful': 'Cập nhật mật khẩu thành công',
   'Update password failure': 'Cập nhật mật khẩu thât bại',
+
+  'Success!': 'Thành Công!',
+  'Error!': 'Lỗi!',
+  'Get report success!': 'Tải báo cáo thống kê thành công!',
+  'Get report failure!': 'Tải báo cáo thông kê thất bại!'
 }

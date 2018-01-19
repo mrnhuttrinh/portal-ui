@@ -17,15 +17,10 @@ export const LANGUAGE_SELECTION = {
 export const DEFAULT_LANGUAGE = 'vi';
 
 export const UI_ROUTES_LEFT_SIDE_MENU = {
-  CUSTOMER: {
-    value: 'customer',
-    text: 'Customer',
-    icon: 'people',
-    url: '/customer',
-  },
-  LOGOUT: {
-    value: 'logout',
-    text: 'Logout',
-    icon: 'exit_to_app',
+  REPORT: {
+    value: 'report',
+    text: 'Report',
+    icon: 'content_paste',
+    url: '/',
   },
 };

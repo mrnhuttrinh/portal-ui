@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route, Redirect, withRouter } from 'react-router-dom';
 import AppBarHeader from './appBarHeader';
@@ -6,9 +7,46 @@ import LeftSideMenu from './leftSideMenu';
 import privateRouteReducers from './reducers';
 import { AnimationGroup } from '../../components';
 
-import "./index.scss"; 
+import "./index.scss";
 
-class PrivateRoute extends React.Component{
+class PrivateRoute extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      reloadChildren: true,
+    };
+    this.forceReloadContent = this.forceReloadContent.bind(this);
+  }
+  forceReloadContent() {
+    this.setState({
+      reloadChildren: false,
+    });
+    setTimeout(() => {
+      this.setState({
+        reloadChildren: true,
+      });
+    }, 0);
+  }
+  getChildContext() {
+    return {
+      forceReloadContent: this.forceReloadContent
+    };
+  }
+  renderChildComponent(props, Component) {
+    const {
+      parentComponent,
+    } = this.props;
+    if (parentComponent) {
+      const ParentComponent = parentComponent;
+      return (
+        <React.Fragment>
+          <Component {...props}/>
+          <ParentComponent />
+        </React.Fragment>
+      )
+    }
+    return (<Component {...props}/>);
+  }
   render() {
     const {
       component: Component,
@@ -26,14 +64,17 @@ class PrivateRoute extends React.Component{
             <AppBarHeader />
             <div className="main-body">
               <div className={leftSidebarClassName}>
-                <LeftSideMenu location={props.location} />
-              </div> 
+                <LeftSideMenu location={props.location} permissions={this.props.data.permissions}/>
+              </div>
+              <div className={`transparent-layer ${leftSidebarClassName}`} /> 
               <div className={rightContentClassName}>
                 <AnimationGroup
-                  loading={loading}
+                  loading={loading || !this.state.reloadChildren}
                   errorLoading={errorLoading}
                 />
-                <Component {...props}/>
+                {
+                  this.state.reloadChildren ? this.renderChildComponent(props, Component) : null
+                }
               </div>
             </div>
           </div>
@@ -56,6 +97,10 @@ class PrivateRoute extends React.Component{
     );
   }
 }
+
+PrivateRoute.childContextTypes = {
+  forceReloadContent: PropTypes.func,
+};
 
 const mapStateToProps = (state) => ({
   data: state.loginReducer.get('data'),

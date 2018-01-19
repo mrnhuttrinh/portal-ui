@@ -11,13 +11,13 @@ import MenuItem from 'material-ui/MenuItem';
 import _ from 'lodash';
 import {
   TextField,
-  Checkbox,
 } from '../commons';
 import {
   PATTERN_EMAIL,
   LANGUAGE_SELECTION,
 } from '../../constants';
 import * as actions from './actions';
+import AlertMessage from './alertMessage';
 
 import loginReducer from './reducers';
 
@@ -38,8 +38,18 @@ class Login extends React.Component{
     super(props);
     this.onClickSignIn = this.onClickSignIn.bind(this);
     this.onSelectLanguage = this.onSelectLanguage.bind(this);
+    this.alertMessageHandleOpen = this.alertMessageHandleOpen.bind(this);
+    this.alertMessageHandleClose = this.alertMessageHandleClose.bind(this);
   }
-  onClickSignIn() {
+  alertMessageHandleOpen = () => {
+    this.props.actions.turnOffAlertMessage(true);
+  };
+
+  alertMessageHandleClose = () => {
+    this.props.actions.cleanError();
+    this.props.actions.turnOffAlertMessage(false);
+  };
+  onClickSignIn(event) {
     const {
       values = {},
       location: {
@@ -47,6 +57,10 @@ class Login extends React.Component{
       },
       history,
     } = this.props;
+    event.preventDefault();
+    if (_.isEmpty(values.email) || _.isEmpty(values.password)) {
+      return false;
+    }
     this.props.actions.submitLogin(values.email, values.password, this.props.language).then(() => {
       history.push(state.from);
     });
@@ -75,7 +89,7 @@ class Login extends React.Component{
   render() {
     const errorTextLoginFailed = 'Sorry, that login was invalid. Please try again.';
     return (
-      <form onSubmit={this.onClickSignIn} className="login-form">
+      <form onSubmit={(event) => this.onClickSignIn(event)} className="login-form">
         <div className="ecash-login">
           <div className="ecash-login-logo">
             <div>
@@ -106,14 +120,7 @@ class Login extends React.Component{
                 />
               </div>
               <div className="remember-me">
-                <div className="pull-left">
-                  <Field
-                    name="rememberMe"
-                    component={Checkbox}
-                    label={this.props.t('Remember me')}
-                  />
-                </div>
-                <div className="pull-right forgot-password">{this.props.t('Forgot Password')}?</div>
+                <div className="pull-right forgot-password">{this.props.t('Forgot password')}?</div>
                 <div className="clearfix" />
               </div>
               <div className="button-sign-in">
@@ -135,7 +142,7 @@ class Login extends React.Component{
                       label={this.props.t('SIGN IN')}
                       icon={this.props.requesting ? <CircularProgress size={20} /> : null}
                       backgroundColor="#009688"
-                      onClick={this.onClickSignIn}
+                      onClick={(event) => this.onClickSignIn(event)}
                     />
                   )
                 }
@@ -147,6 +154,10 @@ class Login extends React.Component{
             {this.renderOptionLanguages()}
           </div>
         </div>
+        <AlertMessage
+          openAlertMessage={this.props.openAlertMessage}
+          alertMessageHandleClose={this.alertMessageHandleClose}
+        />
       </form>
     );
   }
@@ -158,6 +169,7 @@ const mapStateToProps = (state) => ({
   data: state.loginReducer.get('data'),
   errorLogin: state.loginReducer.get('errorLogin'),
   values: getFormValues('loginForm')(state),
+  openAlertMessage: state.loginReducer.get('openAlertMessage'),
 });
 
 const mapDispatchToProps = dispatch => ({

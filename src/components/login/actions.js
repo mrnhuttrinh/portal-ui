@@ -9,6 +9,8 @@ import {
   REFRESH_TOKEN,
   SIGN_OUT,
   CHANGE_LANGUAGE,
+  CLEAN_ERROR,
+  TURN_OFF_ALERT_MESSAGE,
 } from './constants';
 
 export const submitLogin = (username, password, language) => {
@@ -70,3 +72,12 @@ export const changeLanguage = (language) => {
     language,
   };
 };
+
+export const cleanError = () => ({
+  type: CLEAN_ERROR,
+});
+
+export const turnOffAlertMessage = openAlertMessage => ({
+  type: TURN_OFF_ALERT_MESSAGE,
+  openAlertMessage
+});

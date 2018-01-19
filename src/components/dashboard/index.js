@@ -1,6 +1,4 @@
 import React from 'react';
-import AppBar from 'material-ui/AppBar';
-import MenuItem from 'material-ui/MenuItem';
 import FontIcon from 'material-ui/FontIcon';
 import {
   Table,
@@ -10,7 +8,7 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
-import { Pagination } from '../../components';
+import { ContentWrapper } from '../../components';
 
 class Dashboard extends React.Component {
   constructor() {
@@ -31,33 +29,10 @@ class Dashboard extends React.Component {
   }
   render() {
     return (
-      <div>
-        <AppBar
-          title={<span style={{
-              color: 'rgba(0, 0, 0, 0.4)',
-            }}>Danh sách khách hàng</span>}
-          iconStyleLeft={{display: 'none'}}
-          style={{
-            backgroundColor: '#e8e8e8',
-            border: 'rgba(0, 0, 0, 0.12) 1px'
-          }}
-          iconElementRight={
-            <MenuItem
-              style={{
-                color: '#009688',
-                letterSpacing: '0px'
-              }}
-              leftIcon={
-                <FontIcon
-                  style={{
-                    color: '#009688',
-                  }}
-                  className="material-icons"
-                >refresh</FontIcon>}>
-                REFRESH
-            </MenuItem>
-          }
-        />
+      <ContentWrapper
+        title="Customer details"
+        iconStyleLeft={{display: 'none'}}
+      >
         <Table style={{color: 'rgba(0, 0, 0, 0.87)'}}>
           <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
             <TableRow>
@@ -167,23 +142,7 @@ class Dashboard extends React.Component {
             </TableRow>
           </TableBody>
         </Table>
-        <div style={{backgroundColor: '#fff', padding: '7px', fontSize: '14px', color: 'rgba(0, 0, 0, 0.87)'}}>
-          <span style={{float: 'left', lineHeight: '50px'}}>200-210 of 2580</span>
-          <div style={{float: 'right', display: 'inline-block', lineHeight: '50px'}}>
-            <Pagination
-              currentPage={this.state.currentPage}
-              totalPages={this.state.totalPages}
-              boundaryPagesRange={this.state.boundaryPagesRange}
-              siblingPagesRange={this.state.siblingPagesRange}
-              hidePreviousAndNextPageLinks={this.state.hidePreviousAndNextPageLinks}
-              hideFirstAndLastPageLinks={this.state.hideFirstAndLastPageLinks}
-              hideEllipsis={this.state.hideEllipsis}
-              onChange={this.onPageChangeFromPagination}
-            />
-          </div>
-          <div style={{clear: 'both'}} />
-        </div>
-      </div>
+      </ContentWrapper>
     );
   }
 }
