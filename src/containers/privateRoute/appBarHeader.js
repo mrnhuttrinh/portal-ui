@@ -20,6 +20,7 @@ import {
   SUBMIT_LOGIN,
 } from '../../components/login/constants';
 import { parseStringToObjectJson } from '../../utils';
+import { IconUser, DisplayNameUser } from './iconUser';
 
 const Logged = translate('translations')(class RightAppBar extends React.Component {
   buildMenuLanguage() {
@@ -37,23 +38,34 @@ const Logged = translate('translations')(class RightAppBar extends React.Compone
   }
   render() {
     return (
-      <IconMenu
-        {...this.props}
-        iconButtonElement={
-          <IconButton><MoreVertIcon /></IconButton>
-        }
-        targetOrigin={{horizontal: 'right', vertical: 'top'}}
-        anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-      >
-        <MenuItem
-          primaryText={this.props.t('Language Long')}
-          rightIcon={<ArrowDropRight />}
-          menuItems={this.buildMenuLanguage()}
-        />
-        <Divider />
-        <MenuItem primaryText={this.props.t('My profile')} onClick={this.props.viewMyProfile}/>
-        <MenuItem primaryText={this.props.t('Logout')} onClick={this.props.signOut}/>
-      </IconMenu>
+      <div>
+        <IconUser user={this.props.user} />
+        <DisplayNameUser user={this.props.user} />
+        <IconMenu
+          {...this.props}
+          iconButtonElement={
+            <IconButton
+              iconStyle={{
+                height: '40px'
+              }}
+              style={{
+                padding: '0px'
+              }}
+            ><MoreVertIcon /></IconButton>
+          }
+          targetOrigin={{horizontal: 'right', vertical: 'top'}}
+          anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+        >
+          <MenuItem
+            primaryText={this.props.t('Language Long')}
+            rightIcon={<ArrowDropRight />}
+            menuItems={this.buildMenuLanguage()}
+          />
+          <Divider />
+          <MenuItem primaryText={this.props.t('My profile')} onClick={this.props.viewMyProfile}/>
+          <MenuItem primaryText={this.props.t('Logout')} onClick={this.props.signOut}/>
+        </IconMenu>
+      </div>
     );
   }
 })
@@ -121,8 +133,15 @@ class AppBarHeader extends Component {
             backgroundColor: '#80cbc4',
             boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12)'
           }}
-          title={<Link style={{textDecoration: 'none', color: '#fff'}} to="/">CMS</Link>}
-          iconElementRight={<Logged language={language} viewMyProfile={this.viewMyProfile} signOut={this.signOut} languageSetting={this.languageSetting} />}
+          iconElementRight={
+            <Logged
+              user={userData.user}
+              language={language}
+              viewMyProfile={this.viewMyProfile}
+              signOut={this.signOut}
+              languageSetting={this.languageSetting}
+            />
+          }
           onLeftIconButtonTouchTap={this.props.actions.toggleLeftMenu}
         />
       </header>

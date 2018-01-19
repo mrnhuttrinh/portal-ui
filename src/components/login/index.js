@@ -99,7 +99,7 @@ class Login extends React.Component{
           <div className="ecash-login-form">
             <div>
               <p className="title">
-              {this.props.t('Sign In To Admin')}
+              {this.props.t('SIGN IN')}
               </p>
               <div className="email">
                 <Field
