@@ -17,10 +17,22 @@ export const LANGUAGE_SELECTION = {
 export const DEFAULT_LANGUAGE = 'vi';
 
 export const UI_ROUTES_LEFT_SIDE_MENU = {
+  GENERAL_INFORMATION: {
+    value: 'general_information',
+    text: 'General Information',
+    icon: 'supervisor_account',
+    url: '/',
+  },
   REPORT: {
     value: 'report',
     text: 'Report',
-    icon: 'content_paste',
-    url: '/',
+    icon: 'account_balance_wallet',
+    url: '/report',
+  },
+  SETTING: {
+    value: 'setting',
+    text: 'Settings',
+    icon: 'settings',
+    url: '/settings',
   },
 };
