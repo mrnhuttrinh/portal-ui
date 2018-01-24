@@ -7,7 +7,6 @@ import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
-import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
@@ -38,7 +37,7 @@ const Logged = translate('translations')(class RightAppBar extends React.Compone
   }
   render() {
     return (
-      <div>
+      <div className="app-bar-header">
         <IconUser user={this.props.user} />
         <DisplayNameUser user={this.props.user} />
         <IconMenu

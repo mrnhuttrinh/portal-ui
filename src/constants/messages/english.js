@@ -22,5 +22,8 @@ export default {
   'Success!': 'Success!',
   'Error!': 'Error!',
   'Get report success!': 'Get report success!',
-  'Get report failure!': 'Get report failure!'
+  'Get report failure!': 'Get report failure!',
+
+  'Get user general information success!': 'Get user general information success!',
+  'Get user general information failure!': 'Get user general information failure!'
 };

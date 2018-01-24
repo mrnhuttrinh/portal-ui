@@ -19,7 +19,7 @@ export const DEFAULT_LANGUAGE = 'vi';
 export const UI_ROUTES_LEFT_SIDE_MENU = {
   GENERAL_INFORMATION: {
     value: 'general_information',
-    text: 'General Information',
+    text: 'General information',
     icon: 'supervisor_account',
     url: '/',
   },

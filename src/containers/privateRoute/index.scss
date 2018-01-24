@@ -8,6 +8,9 @@
     // min-width: 100%;
     margin: 0 -9999rem;
     padding: 0 9999rem;
+    .app-bar-header {
+      white-space: nowrap;
+    }
     span.full-display-name {
       border: 10px;
       box-sizing: border-box;

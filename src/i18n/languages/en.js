@@ -131,6 +131,7 @@ const en = {
     'Password': 'Password',
     'Remember me': 'Remember me',
     'Forgot Password': 'Forgot Password',
+    'Forgot password': 'Forgot password',
     'SIGN IN': 'Sign in',
     'Display language': 'Display language',
     'Vietnamese': 'Vietnamese',
@@ -219,6 +220,21 @@ const en = {
     // report
     'Start date can\'t greater than end date!': 'Start date can\'t greater than end date!',
     'End date can\'t less than start date!': 'End date can\'t less than start date!',
+    // general information
+    'General Information': 'General Information',
+    'General information': 'General information',
+    'Date of birth': 'Date of birth',
+    'Nationality': 'Nationality',
+    'Member code': 'Member code',
+    'Department': 'Department',
+    'Mobile phone': 'Mobile phone',
+    'Work phone': 'Work phone',
+    'Account No.': 'Account No.',
+    'Currency code': 'Currency code',
+    'MALE': 'MALE',
+    'FEMALE': 'FEMALE',
+    // setting
+    'Settings': 'Settings'
   }
 };
 

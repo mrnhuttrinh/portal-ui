@@ -257,7 +257,6 @@ class DataTable extends React.Component {
     return null;
   }
   render() {
-    console.log(this.state.columnDisplay)
     return (
       <div
         ref={element => this.dataTableWrapper = element}

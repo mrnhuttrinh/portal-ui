@@ -1,0 +1,1 @@
+export const GET_USER_GENERAL_INFORMATION = 'generalInformation/GET_USER_GENERAL_INFORMATION';

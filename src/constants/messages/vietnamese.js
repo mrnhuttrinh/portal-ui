@@ -22,5 +22,8 @@ export default {
   'Success!': 'Thành Công!',
   'Error!': 'Lỗi!',
   'Get report success!': 'Tải báo cáo thống kê thành công!',
-  'Get report failure!': 'Tải báo cáo thông kê thất bại!'
+  'Get report failure!': 'Tải báo cáo thông kê thất bại!',
+
+  'Get user general information success!': 'Tải thông tin người dùng thành công!',
+  'Get user general information failure!': 'Tải thông tin người dùng thất bại!'
 }

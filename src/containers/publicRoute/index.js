@@ -24,11 +24,8 @@ class PublicRoute extends React.Component {
     return <Route {...rest} render={props => (
       <Grid fluid className="ecash-outside">
         <Row>
-          <Col xs={12} sm={12} md={6} lg={4} className="ecash-outside-form">
+          <Col xs={12} sm={12} md={12} lg={12} className="ecash-outside-form">
             <Component {...props}/>
-          </Col>
-          <Col xs={12} sm={12} md={6} lg={8} className="ecash-outside-picture">
-            <div className="wrap-content" />
           </Col>
         </Row>
       </Grid>

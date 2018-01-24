@@ -7,23 +7,17 @@ import DatePicker from 'material-ui/DatePicker';
 import { translate } from 'react-i18next';
 import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
-import { Row, Col } from 'react-flexbox-grid';
+import {GridList} from 'material-ui/GridList';
+import { Card, CardText } from 'material-ui/Card';
+import Popover, {PopoverAnimationVertical} from 'material-ui/Popover';
 
 import * as actions from './actions';
 
-import { rowContainer } from './styles';
-
 const buttonStyle = {
-  margin: '20px',
+  margin: '10px',
   backgroundColor: '#009688',
   boxShadow: '0 2px 2px 0 rgba(0, 0, 0, 0.24)',
-}
-
-const recapchaWrapper = {
-  height: 78,
-  padding: 0,
-  margin: 0,
-  width: 304,
+  float: 'right'
 }
 
 class ReportControl extends React.Component {
@@ -36,30 +30,36 @@ class ReportControl extends React.Component {
     const currentMonth = moment().month();
     this.state = {
       fromDate: new Date(currentYear, currentMonth, 1),
-      toDate: new Date(),
-      recaptchaValue: null,
+      toDate: moment().add(1, 'days').toDate(),
       errors: {},
+      popupRecapcha: false,
     }
     this.verifyCallback = this.verifyCallback.bind(this);
     this.onClickViewReport = this.onClickViewReport.bind(this);
   }
   verifyCallback(response) {
-    this.setState({
-      recaptchaValue: response,
-    });
-  }
-  onClickViewReport() {
     const fromDate = moment(this.state.fromDate).format('M/D/YYYY');
     const toDate = moment(this.state.toDate).format('M/D/YYYY');
-    this.props.actions.getFilterReport(fromDate, toDate, this.state.recaptchaValue).then(() => {
+    this.props.actions.getFilterReport(fromDate, toDate, response).then(() => {
       this.setState({
-        recaptchaValue: null,
+        popupRecapcha: false,
       });
-      if (this.recaptchaInstance) {
-        this.recaptchaInstance.reset();
-      }
     });
   }
+  onClickViewReport(event) {
+   
+    event.preventDefault();
+
+    this.setState({
+      popupRecapcha: true,
+      anchorEl: event.currentTarget,
+    });
+  }
+  handleRequestClose = () => {
+    this.setState({
+      popupRecapcha: false,
+    });
+  };
   handleChangeDate(key, value) {
     const errors = {};
 
@@ -79,7 +79,7 @@ class ReportControl extends React.Component {
     });
   }
   disabledButtonView() {
-    if (!this.state.recaptchaValue || this.props.filterReportRequesting){
+    if (this.props.filterReportRequesting){
       return true;
     }
     if (this.state.fromDate || !this.state.toDate) {
@@ -89,55 +89,66 @@ class ReportControl extends React.Component {
   }
   renderControl() {
     return (
-      <Row style={rowContainer}>
-        <Col md={12}>
-          <Row>
-            <Col style={{paddingLeft: 10}} md={4} xs={12}>
-              <div style={recapchaWrapper}>
-                <Recaptcha
-                  ref={e => this.recaptchaInstance = e}
-                  sitekey={ReportControl.siteKey}
-                  verifyCallback={this.verifyCallback}
-                />
-              </div>
-            </Col>
-            <Col md={3} xs={12}>
-              <DatePicker
-                autoOk
-                style={{paddingLeft: 20}}
-                floatingLabelText={this.props.t('From date')}
-                hintText={this.props.t('From date')}
-                value={this.state.fromDate}
-                onChange={(event, date) => this.handleChangeDate('fromDate', date)}
-                fullWidth
-                errorText={this.state.errors.fromDate ? this.props.t(this.state.errors.fromDate) : null}
+      <Card
+        style={{backgroundColor: '#e8e8e8'}}
+        containerStyle={{paddingBottom: 0}}
+      >
+        <CardText
+          style={{padding: 5}}
+        >
+          <GridList
+            cols={12}
+            padding={5}
+            cellHeight={56}
+          >
+            <DatePicker
+              autoOk
+              floatingLabelText={this.props.t('From date')}
+              hintText={this.props.t('From date')}
+              value={this.state.fromDate}
+              onChange={(event, date) => this.handleChangeDate('fromDate', date)}
+              fullWidth
+              errorText={this.state.errors.fromDate ? this.props.t(this.state.errors.fromDate) : null}
+              cols={4}
+            />
+            <DatePicker
+              autoOk
+              floatingLabelText={this.props.t('To date')}
+              hintText={this.props.t('To date')}
+              value={this.state.toDate}
+              onChange={(event, date) => this.handleChangeDate('toDate', date)}
+              fullWidth
+              errorText={this.state.errors.toDate ? this.props.t(this.state.errors.toDate) : null}
+              cols={4}
+            />
+            <RaisedButton
+              label={this.props.t('View')}
+              style={buttonStyle}
+              backgroundColor="#009688"
+              labelColor="#fff"
+              onClick={this.onClickViewReport}
+              disabled={this.disabledButtonView()}
+              cols={4}
+            />
+          </GridList>
+          <Popover
+            open={this.state.popupRecapcha}
+            anchorEl={this.state.anchorEl}
+            anchorOrigin={{horizontal: 'right', vertical: 'center'}}
+            targetOrigin={{horizontal: 'right', vertical: 'center'}}
+            onRequestClose={this.handleRequestClose}
+            animation={PopoverAnimationVertical}
+          >
+            <div>
+              <Recaptcha
+                ref={e => this.recaptchaInstance = e}
+                sitekey={ReportControl.siteKey}
+                verifyCallback={this.verifyCallback}
               />
-            </Col>
-            <Col md={3} xs={12}>
-              <DatePicker
-                autoOk
-                style={{paddingLeft: 20}}
-                floatingLabelText={this.props.t('To date')}
-                hintText={this.props.t('To date')}
-                value={this.state.toDate}
-                onChange={(event, date) => this.handleChangeDate('toDate', date)}
-                fullWidth
-                errorText={this.state.errors.toDate ? this.props.t(this.state.errors.toDate) : null}
-              />
-            </Col>
-            <Col md={2} xs={12}>
-              <RaisedButton
-                label={this.props.t('View')}
-                style={buttonStyle}
-                backgroundColor="#009688"
-                labelColor="#fff"
-                onClick={this.onClickViewReport}
-                disabled={this.disabledButtonView()}
-              />
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+            </div>
+          </Popover>
+        </CardText>
+      </Card>
     )
   }
   render() {
