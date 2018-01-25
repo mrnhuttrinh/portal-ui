@@ -119,73 +119,72 @@ class ReportData extends React.Component {
     };
     return (
       <div
+        className="report-data-list"
         ref={element => this.dataTableWrapper = element}
-        style={Object.assign({}, {
-            position: 'relative',
-          }, this.props.style
-        )}
       >
-        <Table
-          style={{color: 'rgba(0, 0, 0, 0.87)'}}
-          bodyStyle={{
-            overflowX: 'visible',
-            overflowY: 'visible'
-          }}
-          fixedHeader={tableConfig.fixedHeader}
-          fixedFooter={tableConfig.fixedFooter}
-          selectable={tableConfig.selectable}
-          multiSelectable={tableConfig.multiSelectable}
-          onCellClick={this.onCellClick}
-        >
-          <TableHeader
-            displaySelectAll={tableConfig.showCheckboxes}
-            adjustForCheckbox={tableConfig.showCheckboxes}
-            enableSelectAll={tableConfig.enableSelectAll}
+        <div className="table-report-data">
+          <Table
+            style={{color: 'rgba(0, 0, 0, 0.87)'}}
+            bodyStyle={{
+              overflowX: 'visible',
+              overflowY: 'visible'
+            }}
+            fixedHeader={tableConfig.fixedHeader}
+            fixedFooter={tableConfig.fixedFooter}
+            selectable={tableConfig.selectable}
+            multiSelectable={tableConfig.multiSelectable}
+            onCellClick={this.onCellClick}
           >
-            <TableRow>
-              <TableHeaderColumn>
-                <FlatButton
-                  label={this.props.t('No.')}
-                  labelPosition="before"
-                  primary={false}
-                  labelStyle={{paddingLeft: 0}}
-                />
-              </TableHeaderColumn>
-              <TableHeaderColumn>
-                <FlatButton
-                  label={this.props.t('Generation come-up')}
-                  labelPosition="before"
-                  primary={false}
-                  labelStyle={{paddingLeft: 0}}
-                />
-              </TableHeaderColumn>
-              <TableHeaderColumn>
-                <FlatButton
-                  label={this.props.t('Amount')}
-                  labelPosition="before"
-                  primary={false}
-                  labelStyle={{paddingLeft: 0}}
-                />
-              </TableHeaderColumn>
-              <TableHeaderColumn>
-                <FlatButton
-                  label={this.props.t('Content')}
-                  labelPosition="before"
-                  primary={false}
-                  labelStyle={{paddingLeft: 0}}
-                />
-              </TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody
-            displayRowCheckbox={tableConfig.showCheckboxes}
-            deselectOnClickaway={tableConfig.deselectOnClickaway}
-            showRowHover={tableConfig.showRowHover}
-            stripedRows={tableConfig.stripedRows}
-          >
-            {this.createRowData()}
-          </TableBody>
-        </Table>
+            <TableHeader
+              displaySelectAll={tableConfig.showCheckboxes}
+              adjustForCheckbox={tableConfig.showCheckboxes}
+              enableSelectAll={tableConfig.enableSelectAll}
+            >
+              <TableRow>
+                <TableHeaderColumn>
+                  <FlatButton
+                    label={this.props.t('No.')}
+                    labelPosition="before"
+                    primary={false}
+                    labelStyle={{paddingLeft: 0}}
+                  />
+                </TableHeaderColumn>
+                <TableHeaderColumn>
+                  <FlatButton
+                    label={this.props.t('Generation come-up')}
+                    labelPosition="before"
+                    primary={false}
+                    labelStyle={{paddingLeft: 0}}
+                  />
+                </TableHeaderColumn>
+                <TableHeaderColumn>
+                  <FlatButton
+                    label={this.props.t('Amount')}
+                    labelPosition="before"
+                    primary={false}
+                    labelStyle={{paddingLeft: 0}}
+                  />
+                </TableHeaderColumn>
+                <TableHeaderColumn>
+                  <FlatButton
+                    label={this.props.t('Content')}
+                    labelPosition="before"
+                    primary={false}
+                    labelStyle={{paddingLeft: 0}}
+                  />
+                </TableHeaderColumn>
+              </TableRow>
+            </TableHeader>
+            <TableBody
+              displayRowCheckbox={tableConfig.showCheckboxes}
+              deselectOnClickaway={tableConfig.deselectOnClickaway}
+              showRowHover={tableConfig.showRowHover}
+              stripedRows={tableConfig.stripedRows}
+            >
+              {this.createRowData()}
+            </TableBody>
+          </Table>
+        </div>
         <AnimationGroup
           loading={this.props.filterReportRequesting}
           style={{
