@@ -90,7 +90,7 @@ class LeftSideMenu extends React.Component {
     if (chooseMenu) {
       return chooseMenu.value;
     }
-    return UI_ROUTES_LEFT_SIDE_MENU.REPORT.value; 
+    return UI_ROUTES_LEFT_SIDE_MENU.GENERAL_INFORMATION.value; 
   }
 
   generateMenu(routeUI, key) {

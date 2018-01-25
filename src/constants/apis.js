@@ -13,5 +13,6 @@ export const USER_DETAIL_API = '/api/users/{id}?projection=custom';
 export const USER_HISTORY_API = '/api/userHistories?projection=custom&user.id={id}';
 export const USER_UPDATE_STATUS_API = '/api/users/update-status';
 export const USER_UPDATE_SETTING_API = '/api/users/update-setting';
+export const USER_GENERAL_INFORMATION_API = '/api/users/general-information';
 // for report
 export const GET_FILTER_REPORT_API = '/api/transactions?fromDate={fromDate}&toDate={toDate}&g-recaptcha-response={g-recaptcha-response}';

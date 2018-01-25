@@ -131,6 +131,7 @@ const vi = {
     'Password': 'Mật khẩu',
     'Remember me': 'Ghi nhớ đăng nhập',
     'Forgot Password': 'Quên mật khẩu',
+    'Forgot password': 'Quên mật khẩu',
     'SIGN IN': 'Đăng nhập',
     'Display language': 'Hiển thị bằng ngôn ngữ',
     'Vietnamese': 'Tiếng Việt',
@@ -218,6 +219,21 @@ const vi = {
     // report
     'Start date can\'t greater than end date!': 'Ngày bắt đầu không lớn hơn ngày kết thúc!',
     'End date can\'t less than start date!': 'Ngày kết thúc không nhỏ hơn ngày bắt đầu!',
+    // general information
+    'General Information': 'Thông tin chung',
+    'General information': 'Thông tin chung',
+    'Date of birth': 'Ngày sinh',
+    'Nationality': 'Quốc tịch',
+    'Member code': 'Mã SV / NV',
+    'Department': 'Khoa | Phòng ban',
+    'Mobile phone': 'SĐT di động',
+    'Work phone': 'SĐT khác',
+    'Account No.': 'Số tài khoản',
+    'Currency code': 'Loại tiền',
+    'MALE': 'NAM',
+    'FEMALE': 'NỮ',
+    // setting
+    'Settings': 'Cài đặt'
   }
 };
 

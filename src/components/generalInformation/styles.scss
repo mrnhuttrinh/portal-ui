@@ -1,0 +1,18 @@
+.general-information-customer {
+  margin-bottom: 20px;
+  .general-information-customer {
+    margin-bottom: 20px;
+    &:last-child {
+      margin-bottom: 0px;
+    }
+  }
+  .general-information-account {
+    margin-bottom: 20px;
+    &:last-child {
+      margin-bottom: 0px;
+    }
+  }
+  &:last-child {
+    margin-bottom: 0px;
+  }
+}

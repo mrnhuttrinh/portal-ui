@@ -17,6 +17,7 @@ import {
   UserProfile,
   GlobalGuide,
   AnimationGroup,
+  GeneralInformation,
   Report,
 } from './components';
 
@@ -40,7 +41,8 @@ const AppRoutes = ({refreshTokenRequesting}) => {
           ) : (
             <Switch>
               <PublicRoute path="/login" component={Login} />
-              <PrivateRoute exact path="/" component={Report} />
+              <PrivateRoute exact path="/" component={GeneralInformation} />
+              <PrivateRoute exact path="/report" component={Report} />
               <PrivateRoute path="/user-profile" isExact component={UserProfile} />
               <Route component={NotFound}/>
             </Switch>
