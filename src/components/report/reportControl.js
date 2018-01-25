@@ -136,7 +136,6 @@ class ReportControl extends React.Component {
             anchorEl={this.state.anchorEl}
             anchorOrigin={{horizontal: 'right', vertical: 'center'}}
             targetOrigin={{horizontal: 'right', vertical: 'center'}}
-            onRequestClose={this.handleRequestClose}
             animation={PopoverAnimationVertical}
           >
             <div>

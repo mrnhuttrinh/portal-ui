@@ -1,4 +1,17 @@
 .portal-user-report {
   min-height: 100%;
+  height: 100%;
   background-color: #fff;
+  width: 100%;
+  // overflow-x: hidden;
+  .report-data-list {
+    position: relative;
+    width: 100%;
+    overflow-x: auto;
+    height: calc(100% - 56px);
+    height: calc(100% - 56px);
+    .table-report-data {
+      min-width: 1000px;
+    }
+  }
 }
