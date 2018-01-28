@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'lodash';
-import numeral from 'numeral';
 import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
 import FlatButton from 'material-ui/FlatButton';
@@ -15,7 +14,7 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import { AnimationGroup, Pagination } from '../';
-import { dateTimeFormatter } from '../../utils';
+import { dateTimeFormatter, formatCurrency } from '../../utils';
 import * as actions from './actions';
 
 import './styles.scss';
@@ -66,7 +65,7 @@ class ReportData extends React.Component {
         <TableRow key={transaction.id}>
           <TableRowColumn className="header-number-increament">{startRowData + index + 1}</TableRowColumn>
           <TableRowColumn>{dateTimeFormatter(transaction.createdAt)}</TableRowColumn>
-          <TableRowColumn>{numeral(transaction.amount).format('0,0.00')}</TableRowColumn>
+          <TableRowColumn>{formatCurrency(transaction.amount)}</TableRowColumn>
           <TableRowColumn>{transaction.transactionDetailDetail}</TableRowColumn>
         </TableRow>
       )
@@ -78,7 +77,7 @@ class ReportData extends React.Component {
         <TableRow>
           <TableRowColumn></TableRowColumn>
           <TableRowColumn className="header-number-increament"><b>Sum per page.</b></TableRowColumn>
-          <TableRowColumn><b>{numeral(sumAmount).format('0,0.00')}</b></TableRowColumn>
+          <TableRowColumn><b>{formatCurrency(sumAmount)}</b></TableRowColumn>
           <TableRowColumn><b>{this.props.t('Total amount of transactions per page')}</b></TableRowColumn>
         </TableRow>
       );
@@ -89,7 +88,7 @@ class ReportData extends React.Component {
         <TableRow>
           <TableRowColumn className="header-number-increament"><b>Sum.</b></TableRowColumn>
           <TableRowColumn></TableRowColumn>
-          <TableRowColumn><b>{numeral(totalAllAmount).format('0,0.00')}</b></TableRowColumn>
+          <TableRowColumn><b>{formatCurrency(totalAllAmount)}</b></TableRowColumn>
           <TableRowColumn><b>{this.props.t('Total amount of all transactions')}</b></TableRowColumn>
         </TableRow>
       );

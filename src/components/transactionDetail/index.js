@@ -4,7 +4,6 @@ import { translate } from 'react-i18next';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
 import _ from 'lodash';
-import numeral from 'numeral';
 import { ContentWrapper, AnimationGroup } from '../commons';
 import { Card, CardText, CardTitle } from 'material-ui/Card';
 import { Row, Col } from 'react-flexbox-grid';
@@ -12,7 +11,7 @@ import { GridList } from 'material-ui/GridList';
 import TextField from 'material-ui/TextField';
 import FontIcon from 'material-ui/FontIcon';
 import MenuItem from 'material-ui/MenuItem';
-import { dateTimeFormatter } from '../../utils';
+import { dateTimeFormatter, formatCurrency } from '../../utils';
 import * as actions from './actions';
 import TransactionDetailReducer from './reducers';
 
@@ -117,7 +116,7 @@ class TransactionDetail extends React.Component {
                   />
                   <TextField
                     floatingLabelText={this.props.t('Current Balance')}
-                    value={numeral(account.currentBalance).format('0,0.00')}
+                    value={formatCurrency(account.currentBalance)}
                     floatingLabelFixed={true}
                     cols={12}
                     fullWidth
@@ -260,7 +259,7 @@ class TransactionDetail extends React.Component {
                   />
                   <TextField
                     floatingLabelText={this.props.t('Amount')}
-                    value={numeral(transaction.amount).format('0,0.00')}
+                    value={formatCurrency(transaction.amount)}
                     floatingLabelFixed={true}
                     cols={12}
                     fullWidth
