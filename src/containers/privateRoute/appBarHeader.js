@@ -38,8 +38,8 @@ const Logged = translate('translations')(class RightAppBar extends React.Compone
   render() {
     return (
       <div className="app-bar-header">
-        <IconUser user={this.props.user} />
-        <DisplayNameUser user={this.props.user} />
+        <IconUser user={this.props.user} language={this.props.language} />
+        <DisplayNameUser user={this.props.user} language={this.props.language} />
         <IconMenu
           {...this.props}
           iconButtonElement={
@@ -116,12 +116,17 @@ class AppBarHeader extends Component {
     const {
       userData = {
         user: {}
-      }
+      },
+      languageSettingData
     } = this.props;
     const data = userData.user || {
       roles: [],
     };
-    const language = (parseStringToObjectJson(data.setting)).language;
+    let language = (parseStringToObjectJson(data.setting)).language;
+    if (!_.isEmpty(languageSettingData)) {
+      language = (parseStringToObjectJson(languageSettingData.setting)).language;
+    }
+
     return (
       <header>
         <AppBar
