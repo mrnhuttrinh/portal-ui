@@ -10,6 +10,8 @@ import moment from 'moment';
 import {GridList} from 'material-ui/GridList';
 import { Card, CardText } from 'material-ui/Card';
 import Popover, {PopoverAnimationVertical} from 'material-ui/Popover';
+import { getItem } from '../../utils';
+import { DEFAULT_LANGUAGE } from '../../constants';
 
 import * as actions from './actions';
 
@@ -140,6 +142,7 @@ class ReportControl extends React.Component {
           >
             <div>
               <Recaptcha
+                hl={getItem('language') || DEFAULT_LANGUAGE}
                 ref={e => this.recaptchaInstance = e}
                 sitekey={ReportControl.siteKey}
                 verifyCallback={this.verifyCallback}
