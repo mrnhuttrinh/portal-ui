@@ -3,8 +3,16 @@ import {
 } from '../../constants';
 
 import {
-  FILTERING_REPORT
+  FILTERING_REPORT,
+  CHANGE_PAGE_DATE,
 } from './constants';
+
+export const changePageData = (index) => (dispatch) => {
+  dispatch({
+    type: CHANGE_PAGE_DATE,
+    index,
+  });
+}
 
 export const getFilterReport = (fromDate, toDate, capchaToken) => {
   const urlFilterReport = GET_FILTER_REPORT_API

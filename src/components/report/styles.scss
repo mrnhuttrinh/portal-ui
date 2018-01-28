@@ -9,9 +9,12 @@
     width: 100%;
     overflow-x: auto;
     height: calc(100% - 56px);
-    height: calc(100% - 56px);
     .table-report-data {
       min-width: 1000px;
+
+      .header-number-increament {
+        width: 70px;
+      }
     }
   }
 }

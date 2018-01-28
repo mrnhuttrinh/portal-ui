@@ -24,9 +24,23 @@ class ContentWrapper extends React.Component {
   onClickRefreshButton() {
     this.context.forceReloadContent();
   }
+  renderChildren() {
+    if (this.props.appBarDisabled) {
+      return (
+        <div className="content-children-not-bar">
+          {this.props.children}
+        </div>
+      );
+    }
+    return  (
+      <div className="content-children">
+        {this.props.children}
+      </div>
+    );
+  }
   render () {
     const {
-      title, iconElementRight, children, appBarDisabled, ...rest
+      title, iconElementRight, children, appBarDisabled, appBarElementRight, ...rest
     } = this.props;
     return (
       <div className="content-wrapper-style">
@@ -39,12 +53,12 @@ class ContentWrapper extends React.Component {
               }}
               title={<span>{this.props.t(title)}</span>}
               className="appbar-style"
-              iconElementRight={<RefreshButton onClick={this.onClickRefreshButton} />}
+              iconElementRight={appBarElementRight ? appBarElementRight : <RefreshButton onClick={this.onClickRefreshButton} />}
               {...rest}
             />
           )
         }
-        {this.props.children}
+        {this.renderChildren()}
       </div>
     );
   }
