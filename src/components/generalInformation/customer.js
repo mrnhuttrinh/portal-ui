@@ -64,42 +64,42 @@ class Customer extends React.Component {
                   floatingLabelText={this.props.t('Date of birth')}
                   value={dateFormatter(customer.dateOfBirth)}
                   floatingLabelFixed={true}
-                  cols={4}
+                  cols={7}
                   fullWidth
                 />
                 <TextField
                   floatingLabelText={this.props.t('Gender')}
                   value={this.props.t(customer.gender ? 'MALE' : 'FEMALE')}
                   floatingLabelFixed={true}
-                  cols={4}
+                  cols={5}
                   fullWidth
                 />
                 <TextField
                   floatingLabelText={this.props.t('Nationality')}
                   value={this.props.t(customer.countryCode ? customer.countryCode.toUpperCase() : '')}
                   floatingLabelFixed={true}
-                  cols={4}
+                  cols={12}
                   fullWidth
                 />
                 <TextField
                   floatingLabelText={this.props.t('Member code')}
                   value={customer.scmsMemberCode}
                   floatingLabelFixed={true}
-                  cols={4}
+                  cols={12}
                   fullWidth
                 />
                 <TextField
                   floatingLabelText={this.props.t('Department')}
                   value={customer.organization ? customer.organization.shortName : ''}
                   floatingLabelFixed={true}
-                  cols={4}
+                  cols={7}
                   fullWidth
                 />
                 <TextField
                   floatingLabelText={this.props.t('Title')}
                   value={this.props.t(customer.position ? customer.position : 'N/A')}
                   floatingLabelFixed={true}
-                  cols={4}
+                  cols={5}
                   fullWidth
                 />
                 <TextField

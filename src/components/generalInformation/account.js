@@ -33,49 +33,49 @@ class Account extends React.Component {
                 floatingLabelText={this.props.t('Account No.')}
                 value={data.id}
                 floatingLabelFixed={true}
-                cols={7}
+                cols={12}
                 fullWidth
               />
               <TextField
                 floatingLabelText={this.props.t('Type')}
                 value={data.accountType ? data.accountType.description : 'N/A'}
                 floatingLabelFixed={true}
-                cols={5}
+                cols={6}
                 fullWidth
               />
               <TextField
                 floatingLabelText={this.props.t('Account name')}
                 value={data.accountName}
                 floatingLabelFixed={true}
-                cols={4}
+                cols={6}
                 fullWidth
               />
               <TextField
                 floatingLabelText={this.props.t('Date opened')}
                 value={dateFormatter(data.dateOpened)}
                 floatingLabelFixed={true}
-                cols={4}
+                cols={6}
                 fullWidth
               />
               <TextField
                 floatingLabelText={this.props.t('Date closed')}
                 value={dateFormatter(data.dateClosed)}
                 floatingLabelFixed={true}
-                cols={4}
+                cols={6}
                 fullWidth
               />
               <TextField
                 floatingLabelText={this.props.t('Currency code')}
                 value={data.currencyCode ? data.currencyCode.text : 'N/A'}
                 floatingLabelFixed={true}
-                cols={4}
+                cols={6}
                 fullWidth
               />
               <TextField
                 floatingLabelText={this.props.t('Status')}
                 value={this.props.t(data.status)}
                 floatingLabelFixed={true}
-                cols={8}
+                cols={6}
                 fullWidth
               />
 
