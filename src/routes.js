@@ -19,6 +19,7 @@ import {
   AnimationGroup,
   GeneralInformation,
   Report,
+  TransactionDetail,
 } from './components';
 
 // https://reacttraining.com/react-router/web/example/auth-workflow
@@ -43,6 +44,7 @@ const AppRoutes = ({refreshTokenRequesting}) => {
               <PublicRoute path="/login" component={Login} />
               <PrivateRoute exact path="/" component={GeneralInformation} />
               <PrivateRoute exact path="/report" component={Report} />
+              <PrivateRoute path="/transaction-detail/:id" component={TransactionDetail} />
               <PrivateRoute path="/user-profile" isExact component={UserProfile} />
               <Route component={NotFound}/>
             </Switch>

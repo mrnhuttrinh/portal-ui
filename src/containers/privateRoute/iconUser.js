@@ -25,10 +25,25 @@ const styles = {
 
 
 class IconUser extends React.PureComponent {
-  getFirstCharOfFirstAndLastWord() {
-    const { user } = this.props;
+  constructor(props) {
+    super(props);
+    this.state = {
+      abbreviationName: this.getFirstCharOfFirstAndLastWord(props),
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      abbreviationName: this.getFirstCharOfFirstAndLastWord(nextProps),
+    });
+  }
+  getFirstCharOfFirstAndLastWord(props) {
+    const { user, language } = props;
     const firstCharacterOfFirstName = user.firstName ? user.firstName.charAt(0) : '';
     const firstCharacterOfLastName = user.lastName ? user.lastName.charAt(0) : '';
+    if (language === 'vi' || language === 'VI') {
+      const combineAbbreviationName = `${firstCharacterOfLastName}${firstCharacterOfFirstName}`;
+      return combineAbbreviationName.toUpperCase();
+    }
     const combineAbbreviationName = `${firstCharacterOfFirstName}${firstCharacterOfLastName}`;
     return combineAbbreviationName.toUpperCase();
   }
@@ -53,7 +68,7 @@ class IconUser extends React.PureComponent {
             top: '10px',
           }}
         >
-          {this.getFirstCharOfFirstAndLastWord()}
+          {this.state.abbreviationName}
         </span>
       </IconButton>
     );
@@ -61,10 +76,24 @@ class IconUser extends React.PureComponent {
 }
 
 class DisplayNameUser extends React.PureComponent {
-  getDisplayName() {
-    const { user } = this.props;
+  constructor(props) {
+    super(props);
+    this.state = {
+      displayName: this.getDisplayName(props),
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      displayName: this.getDisplayName(nextProps),
+    });
+  }
+  getDisplayName(props) {
+    const { user, language } = props;
     const firstName = user.firstName ? user.firstName.trim() : '';
     const lastName = user.lastName ? user.lastName.trim() : '';
+    if (language === 'vi' || language === 'VI') {
+      return `${lastName} ${firstName}`;
+    }
     return `${firstName} ${lastName}`;
   }
   render() {
@@ -80,7 +109,7 @@ class DisplayNameUser extends React.PureComponent {
             position: 'relative',
             top: '-10px',
             fontSize: '24px',
-          }}>{this.getDisplayName()}</span>
+          }}>{this.state.displayName}</span>
       </div>
     );
   }

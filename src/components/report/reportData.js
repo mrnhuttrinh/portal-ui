@@ -1,11 +1,10 @@
 import React from 'react';
-import _ from 'lodash';
-import numeral from 'numeral';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import _ from 'lodash';
 import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
 import FlatButton from 'material-ui/FlatButton';
-import Dialog from 'material-ui/Dialog';
 import {
   Table,
   TableBody,
@@ -14,22 +13,17 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
-import { AnimationGroup } from '../';
-import ReportReducer from './reducers';
-import { dateTimeFormatter } from '../../utils';
-import TransactionDetail from './transactionDetail';
+import { AnimationGroup, Pagination } from '../';
+import { dateTimeFormatter, formatCurrency } from '../../utils';
+import * as actions from './actions';
 
 import './styles.scss';
 
 class ReportData extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      openDialogDetail: false,
-      transactionsDetail: null,
-    };
     this.onCellClick = this.onCellClick.bind(this);
-    this.handleCloseDialogDetail = this.handleCloseDialogDetail.bind(this);
+    this.pageDataChange = this.pageDataChange.bind(this);
   }
   getData() {
     const { filterReportData:{
@@ -43,24 +37,35 @@ class ReportData extends React.Component {
   }
   onCellClick(indexRow, column, event) {
     const transactions = this.getData();
-    // minus 1 row by sum
-    if (indexRow !== 0) {
-      const itemTransaction = transactions[indexRow - 1];
-      this.setState({
-        openDialogDetail: true,
-        transactionsDetail: itemTransaction,
-      });
+    // minus 2 row by sum
+    if (indexRow > 1) {
+      const itemTransaction = transactions[indexRow - 2];
+      this.props.history.push(`/transaction-detail/${itemTransaction.id}`);
     }
+  }
+  getTotalAmount(data) {
+    let sumAmount = 0;
+    _.each(data, transaction => {
+      sumAmount += transaction.amount;
+    });
+    return sumAmount;
   }
   createRowData() {
     let sumAmount = 0;
-    const dataContent = _.map(this.getData(), (transaction, index) => {
+    const data = this.getData();
+    if (!data || !data.length) {
+      return null;
+    }
+    const startRowData = this.props.currentPage * this.props.pageSize;
+    const endRowData = (startRowData + this.props.pageSize) < data.length ? (startRowData + this.props.pageSize) : data.length;
+    const dataWillRender = _.slice(data, startRowData, endRowData);
+    const dataContent = _.map(dataWillRender, (transaction, index) => {
       sumAmount += transaction.amount;
       return (
         <TableRow key={transaction.id}>
-          <TableRowColumn>{index + 1}</TableRowColumn>
+          <TableRowColumn className="header-number-increament">{startRowData + index + 1}</TableRowColumn>
           <TableRowColumn>{dateTimeFormatter(transaction.createdAt)}</TableRowColumn>
-          <TableRowColumn>{numeral(transaction.amount).format('0,0.00')}</TableRowColumn>
+          <TableRowColumn>{formatCurrency(transaction.amount)}</TableRowColumn>
           <TableRowColumn>{transaction.transactionDetailDetail}</TableRowColumn>
         </TableRow>
       )
@@ -70,41 +75,54 @@ class ReportData extends React.Component {
         0,
         0,
         <TableRow>
-          <TableRowColumn><b>Sum.</b></TableRowColumn>
           <TableRowColumn></TableRowColumn>
-          <TableRowColumn><b>{numeral(sumAmount).format('0,0.00')}</b></TableRowColumn>
+          <TableRowColumn className="header-number-increament"><b>Sum per page.</b></TableRowColumn>
+          <TableRowColumn><b>{formatCurrency(sumAmount)}</b></TableRowColumn>
+          <TableRowColumn><b>{this.props.t('Total amount of transactions per page')}</b></TableRowColumn>
+        </TableRow>
+      );
+      const totalAllAmount = this.getTotalAmount(data);
+      dataContent.splice(
+        0,
+        0,
+        <TableRow>
+          <TableRowColumn className="header-number-increament"><b>Sum.</b></TableRowColumn>
           <TableRowColumn></TableRowColumn>
+          <TableRowColumn><b>{formatCurrency(totalAllAmount)}</b></TableRowColumn>
+          <TableRowColumn><b>{this.props.t('Total amount of all transactions')}</b></TableRowColumn>
         </TableRow>
       );
     }
     return dataContent;
   }
-  handleCloseDialogDetail() {
-    this.setState({
-      openDialogDetail: false,
-      transactionsDetail: null,
-    });
+  pageDataChange(index) {
+    this.props.actions.changePageData(index - 1);
   }
-  createDialogData() {
-    const actions = [
-      <FlatButton
-        label={this.props.t('Cancel')}
-        primary={true}
-        onClick={this.handleCloseDialogDetail}
-      />
-    ];
+  renderPagination() {
+    const data = this.getData();
+    if (!data || !data.length) {
+      return null;
+    }
+    const totalPages = Math.ceil(data.length / this.props.pageSize);
+    const fromElement = this.props.currentPage * this.props.pageSize + 1;
+    const toElement = (fromElement + this.props.pageSize) > data.length ? data.length : (fromElement + this.props.pageSize);
+    const totalElements = data.length;
+    const pageDescrition = (fromElement === toElement) ? `${fromElement} ${this.props.t('of')} ${totalElements}` : `${fromElement}-${toElement} ${this.props.t('of')} ${totalElements}`;
     return (
-      <Dialog
-        style={{width: '100%', height: '100%'}}
-        title={this.props.t('Transaction detail')}
-        actions={actions}
-        modal={false}
-        open={this.state.openDialogDetail}
-      >
-        <TransactionDetail data={this.state.transactionsDetail} />
-      </Dialog>
+      <div style={{backgroundColor: '#fff', padding: '7px', fontSize: '14px', color: 'rgba(0, 0, 0, 0.87)'}}>
+        <span style={{float: 'left', lineHeight: '50px'}}>{pageDescrition}</span>
+        <div style={{float: 'right', display: 'inline-block', lineHeight: '50px'}}>
+          <Pagination
+            currentPage={(this.props.currentPage + 1)}
+            totalPages={totalPages}
+            onChange={this.pageDataChange}
+          />
+        </div>
+        <div style={{clear: 'both'}} />
+      </div>
     );
   }
+
   render() {
     const tableConfig = {
       fixedHeader: true,
@@ -141,7 +159,9 @@ class ReportData extends React.Component {
               enableSelectAll={tableConfig.enableSelectAll}
             >
               <TableRow>
-                <TableHeaderColumn>
+                <TableHeaderColumn
+                  className="header-number-increament"
+                >
                   <FlatButton
                     label={this.props.t('No.')}
                     labelPosition="before"
@@ -167,7 +187,7 @@ class ReportData extends React.Component {
                 </TableHeaderColumn>
                 <TableHeaderColumn>
                   <FlatButton
-                    label={this.props.t('Content')}
+                    label={this.props.t('Note')}
                     labelPosition="before"
                     primary={false}
                     labelStyle={{paddingLeft: 0}}
@@ -184,6 +204,7 @@ class ReportData extends React.Component {
               {this.createRowData()}
             </TableBody>
           </Table>
+          {this.renderPagination()}
         </div>
         <AnimationGroup
           loading={this.props.filterReportRequesting}
@@ -191,7 +212,6 @@ class ReportData extends React.Component {
             backgroundColor: 'transparent'
           }}
         />
-        {this.createDialogData()}
       </div>
     );
   }
@@ -205,17 +225,22 @@ ReportData.defaultProps = {
 
 const mapStateToProps = (state) => {
   const filterReport = state.ReportReducer.get('filterReport');
+  const displayData = state.ReportReducer.get('displayData');
   return {
     filterReportRequesting: filterReport.get('requesting'),
     filterReportData: filterReport.get('data'),
     filterReportError: filterReport.get('error'),
+    currentPage: displayData.get('currentPage'),
+    pageSize: displayData.get('pageSize'),
   }
 };
 
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(Object.assign({}, actions), dispatch)
+});
+
+
 export default connect(
   mapStateToProps,
+  mapDispatchToProps,
 )(withRouter(translate('translations')(ReportData)));
-
-export const reducers = {
-  ReportReducer,
-};

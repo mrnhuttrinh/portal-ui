@@ -34,6 +34,7 @@
     "jest": "20.0.4",
     "lodash": "^4.17.4",
     "material-ui": "^0.19.4",
+    "material-ui-datatables": "^0.18.2",
     "moment": "^2.19.2",
     "npm": "^5.6.0",
     "numeral": "^2.0.6",

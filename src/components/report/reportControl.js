@@ -10,6 +10,8 @@ import moment from 'moment';
 import {GridList} from 'material-ui/GridList';
 import { Card, CardText } from 'material-ui/Card';
 import Popover, {PopoverAnimationVertical} from 'material-ui/Popover';
+import { getItem } from '../../utils';
+import { DEFAULT_LANGUAGE } from '../../constants';
 
 import * as actions from './actions';
 
@@ -28,6 +30,7 @@ class ReportControl extends React.Component {
     super(props);
     const currentYear = moment().year();
     const currentMonth = moment().month();
+
     this.state = {
       fromDate: new Date(currentYear, currentMonth, 1),
       toDate: moment().add(1, 'days').toDate(),
@@ -36,6 +39,7 @@ class ReportControl extends React.Component {
     }
     this.verifyCallback = this.verifyCallback.bind(this);
     this.onClickViewReport = this.onClickViewReport.bind(this);
+    this.formatDateSetting = this.formatDateSetting.bind(this);
   }
   verifyCallback(response) {
     const fromDate = moment(this.state.fromDate).format('M/D/YYYY');
@@ -87,6 +91,9 @@ class ReportControl extends React.Component {
     }
     return !this.state.fromDate || !this.state.toDate;
   }
+  formatDateSetting(value) {
+    return moment(value).format('D/M/YYYY');
+  }
   renderControl() {
     return (
       <Card
@@ -102,6 +109,7 @@ class ReportControl extends React.Component {
             cellHeight={56}
           >
             <DatePicker
+              formatDate={this.formatDateSetting}
               autoOk
               floatingLabelText={this.props.t('From date')}
               hintText={this.props.t('From date')}
@@ -112,6 +120,7 @@ class ReportControl extends React.Component {
               cols={4}
             />
             <DatePicker
+              formatDate={this.formatDateSetting}
               autoOk
               floatingLabelText={this.props.t('To date')}
               hintText={this.props.t('To date')}
@@ -140,6 +149,7 @@ class ReportControl extends React.Component {
           >
             <div>
               <Recaptcha
+                hl={getItem('language') || DEFAULT_LANGUAGE}
                 ref={e => this.recaptchaInstance = e}
                 sitekey={ReportControl.siteKey}
                 verifyCallback={this.verifyCallback}

@@ -29,10 +29,4 @@ export const UI_ROUTES_LEFT_SIDE_MENU = {
     icon: 'account_balance_wallet',
     url: '/report',
   },
-  SETTING: {
-    value: 'setting',
-    text: 'Settings',
-    icon: 'settings',
-    url: '/settings',
-  },
 };

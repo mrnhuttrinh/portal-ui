@@ -5,7 +5,7 @@ import Report, { reducers as ReportReducers } from './report';
 import GeneralInformation, { reducers as GeneralInformationReducer } from './generalInformation';
 
 import UserProfile, { reducers as UserProfileReducers } from './userProfile';
-
+import TransactionDetail, { reducers as TransactionDetailReducer } from './transactionDetail';
 // export view
 export {
   Login,
@@ -14,6 +14,7 @@ export {
   GlobalGuide,
   Report,
   GeneralInformation,
+  TransactionDetail,
 };
 
 export const reducers = {
@@ -21,6 +22,7 @@ export const reducers = {
   ...UserProfileReducers,
   ...ReportReducers,
   ...GeneralInformationReducer,
+  ...TransactionDetailReducer,
 }
 
 // export commons control
