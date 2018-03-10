@@ -69,6 +69,7 @@ const vi = {
     'GENDER.0': 'Nữ',
     'GENDER.1': 'Nam',
     'GENDER.2': 'Khác',
+    'GENDER.Null': 'Không xác định',
     'View details': 'Xem chi tiết',
     'Account information': 'Thông tin tài khoản',
     'Account ID': 'Số tài khoản',
